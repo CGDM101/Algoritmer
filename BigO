@@ -1,0 +1,93 @@
+//https://www.digitalocean.com/community/tutorials/js-big-o-notation#o-n
+// Big O Notation
+// One way to represent the general growth in computational difficulty as you increase the task set. O notation is most used because it focuses on the worst-case scenario, which is easier to quantify.
+
+const smArr = [5, 3, 2, 35, 2]
+
+const bigArr = [
+  5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35,
+  2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2,
+  35, 2,
+]
+
+// O(1)
+// This is the ideal. No mattern how many elements, the time to complete will remain the same. Most operations that perform a single operation are O(1). Ex, pushing to an array, getting an element at a particular index, adding a child element - they take the same time regardless of array length.
+const a1 = performance.now()
+smArr.push(27) // Lägger till 27 på slutet (unshift är i början)
+const a2 = performance.now()
+console.log(`Time: ${a2 - a1}`) // Less than 1 Millisecond
+
+const b1 = performance.now()
+bigArr.push(27)
+const b2 = performance.now()
+console.log(`Time: ${b2 - b1}`) // Less than 1 Millisecond
+
+// O(n)
+// All loops are an example of linear growth, because there is a one-to-one relationship between the data size and time to completion. Ex an array with 1000 elements will take exactly 1000 times longer.
+const aa1 = performance.now()
+smArr.forEach((item) => console.log(item))
+const aa2 = performance.now()
+console.log(`Time: ${aa2 - aa1}`) // 3 Milliseconds
+
+const bb1 = performance.now()
+bigArr.forEach((item) => console.log(item))
+const bb2 = performance.now()
+console.log(`Time: ${bb2 - bb1}`) // 13 Milliseconds
+
+// O(n^2)
+// Exponential growth. Ex putting a loop inside a loop; 1000 elements become 1 000 000. It is better with 2000 operations over two separate loops than 1000000 with two nested loops.
+arr2 = [
+  35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3,
+  2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5, 3, 2, 35, 2, 5,
+  3, 2,
+]
+const aaa1 = performance.now()
+smArr.forEach(() => {
+  arr2.forEach((item) => console.log(item))
+})
+const aaa2 = performance.now()
+console.log(`Time: ${aaa2 - aaa1}`) // 8 Milliseconds
+
+const bbb1 = performance.now()
+bigArr.forEach(() => {
+  arr2.forEach((item) => console.log(item))
+})
+const bbb2 = performance.now()
+console.log(`Time: ${bbb2 - bbb1}`) // 307 Milliseconds
+
+// O(log n)
+// Logarithmic growth. Ex leta upp Shakespeare på S-hyllan; inte hela biblioteket. Divide and conquer. The amount of time still changes depending on set size but nowhere near the rate of O(n). We search in progressively more specific sections, without looking at most of the data, therefor a search of a thousand items may take less than 10 operations; further a million may take less than 20, so you get most band for your buck.
+const sort = (arr) => {
+  if (arr.length < 2) return arr // ex quicksort
+
+  let pivot = arr[0]
+  let left = []
+  let right = []
+
+  for (let i = 1, total = arr.length; i < total; i++) {
+    if (arr[i] < pivot) left.push(arr[i])
+    else right.push(arr[i])
+  }
+  return [...sort(left), pivot, ...sort(right)]
+}
+
+sort(smArr) // Detta ger 0 Milliseconds
+sort(bigArr) // Detta ger 1 Millisecond
+
+// O(n!)
+// Factorial growth. Ex travelling salesman. Brute force would be to check the distance between every possible configuration between each city = a factorial.
+const factorial = (n) => {
+  let num = n
+
+  if (n === 0) return 1;
+  for (let i = 0; i < n; i++) {
+    num = n * factorial(n - 1)
+  }
+
+  return num
+}
+
+factorial(1) // Detta ger 2 Milliseconds
+factorial(5) // Detta ger 3 Milliseconds
+factorial(10) // Detta ger 85 Milliseconds
+factorial(12) // Detta ger 11,942 Milliseconds

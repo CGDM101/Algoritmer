@@ -41,3 +41,26 @@ function FactorialIterative(n) {
 }
 console.log("iterative factorial: " + FactorialIterative(5))
 // A while loop replaces the recursive call, but you sittl need to check for the same condiiton and continue looping until the data meets the condiiton.
+
+
+// ANNAT EXEMPEL PÅ REKURSION:
+console.log(SumRecursively(10))
+
+function SumRecursively(k) {
+  if (k > 0) {
+    return k + SumRecursively(k - 1)
+  } else {
+    return 0;
+  }
+} // När k == 0 slutar funktionen anropa sig själv.
+
+// ITERATIV VERSION:
+let sum = 0
+SumIteratively(10)
+function SumIteratively(k) {
+  while(k > 0) {
+    sum = sum + k
+    k = k - 1
+  }
+}
+console.log(sum)
